@@ -1,0 +1,50 @@
+<!-- Button trigger modal -->
+<div class="d-flex justify-content-between mx-5">
+  <h4>list of employees</h4>
+  <button type="button" class="btn btn-primary mb-4" (click)="open(content)">
+    Add an employee +
+  </button>
+</div>
+
+<!-- Modal -->
+<ng-template #content let-modal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Employee</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="saveEmployee()" (change)="logEmployee()" #employeeForm="ngForm">
+          <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="number" class="form-control" [(ngModel)]="employee.id" name="id" id="id" required #idField="ngModel">
+            <div *ngIf="idField.invalid && (idField.dirty || idField.touched)" class="error">
+              ID is required
+            </div>
+            <div *ngIf="idError" class="text-danger">{{ idError }}</div>
+          </div>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" [(ngModel)]="employee.username" name="username" id="username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" [(ngModel)]="employee.email" name="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" [(ngModel)]="employee.status" name="status" id="status">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
+            <button type="submit" [disabled]="!employeeForm.form.valid" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
