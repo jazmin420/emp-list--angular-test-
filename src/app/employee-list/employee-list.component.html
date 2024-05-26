@@ -18,7 +18,7 @@
         <td>{{ employee.email }}</td>
         <td><span [ngClass]="employee.status=='active'?'btn btn-success':'btn btn-danger' "> {{employee.status}}</span></td>
         <td>
-          <button class="mx-3 border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="employee.id && selectEmployee(employee.id)">
+          <button class="mx-3 border rounded" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="employee.id && selectEmployee(employee.id); open(content)">
             <i class="fa-solid fa-pen-to-square" style="color: #74C0FC;"></i>
           </button>
           <button class="border rounded" (click)="employee.id && deleteEmployee(employee.id)">
@@ -30,9 +30,47 @@
   </table>
 </div>
 
+<ng-template #content let-modal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Employee</h4>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="updateEmployee()">
+          <div class="form-group">
+            <label for="id">ID:</label>
+            <input type="number" class="form-control" [(ngModel)]="selectedEmployee.id" name="id" id="id" required disabled>
+          </div>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedEmployee.username" name="username" id="username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" [(ngModel)]="selectedEmployee.email" name="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" [(ngModel)]="selectedEmployee.status" name="status" id="status">
+              <option value="active" class="bg-success">Active</option>
+              <option value="inactive" class="bg-danger">Inactive</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -68,5 +106,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 

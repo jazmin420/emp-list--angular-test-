@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmployeeService } from '../service/employee.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class EmployeeListComponent implements OnInit
 
   selectedEmployee: Employee = new Employee();
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -36,11 +37,15 @@ export class EmployeeListComponent implements OnInit
     }
   }
   
+  open(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
 
 
   updateEmployee(): void {
     this.employeeService.updateEmployees(this.selectedEmployee).subscribe(() => {
       alert('Employee updated successfully');
+      this.modalService.dismissAll(); 
       this.selectedEmployee = new Employee();
       this.getEmployees();
     });
