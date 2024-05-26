@@ -8,7 +8,7 @@ import { Employee } from '../employee.model';
 })
 export class EmployeeService {
 
-  private serverUrl = "http://localhost:3000/employees"
+  private serverUrl = "https://emp-json-server-kv1j.onrender.com/employees"
 
   constructor(private http: HttpClient) { }
 
